@@ -22,7 +22,7 @@ type StateHandlerWithInit interface {
 
 // StateGroup manages a group of state machines sharing the same logic
 type StateGroup struct {
-	sts       *statestore.StateStore
+	sts       statestore.StateStore
 	hnd       StateHandler
 	stateType reflect.Type
 
@@ -36,7 +36,7 @@ type StateGroup struct {
 // stateType: T - (MyStateStruct{})
 func New(ds datastore.Datastore, hnd StateHandler, stateType interface{}) *StateGroup {
 	return &StateGroup{
-		sts:       statestore.New(ds),
+		sts:       statestore.NewDsStateStore(ds),
 		hnd:       hnd,
 		stateType: reflect.TypeOf(stateType),
 		closing:   make(chan struct{}),
@@ -157,7 +157,7 @@ func (s *StateGroup) List(out interface{}) error {
 }
 
 // Get gets state for a single state machine
-func (s *StateGroup) Get(id interface{}) *statestore.StoredState {
+func (s *StateGroup) Get(id interface{}) statestore.StoredState {
 	return s.sts.Get(id)
 }
 

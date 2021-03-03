@@ -31,7 +31,7 @@ type StateMachine struct {
 	eventsIn chan Event
 
 	name      interface{}
-	st        *statestore.StoredState
+	st        statestore.StoredState
 	stateType reflect.Type
 
 	stageDone chan struct{}
