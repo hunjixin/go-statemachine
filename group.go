@@ -34,9 +34,9 @@ type StateGroup struct {
 }
 
 // stateType: T - (MyStateStruct{})
-func New(ds datastore.Datastore, hnd StateHandler, stateType interface{}) *StateGroup {
+func New(sts statestore.StateStore, hnd StateHandler, stateType interface{}) *StateGroup {
 	return &StateGroup{
-		sts:       statestore.NewDsStateStore(ds),
+		sts:       sts,
 		hnd:       hnd,
 		stateType: reflect.TypeOf(stateType),
 		closing:   make(chan struct{}),
